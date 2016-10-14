@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">ChatApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="contacts">CONTACTS</string>
+    <string name="chats">CHATS</string>
+
+    <string name="parse_app_id">LHkNxyEd8sT=QmUtNxyEdsBJaUv</string>
+    <string name="parse_client_key">kBxQmIsA43P9Oo73Sa1$n9</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="signUpText">Sign Up Here!</string>
+    <string name="login_label_button">Login</string>
+    <string name="email_hint">Email</string>
+    <string name="sign_up_button_label">Sign Up </string>
+    <string name="login_error_title">Oops </string>
+    <string name="login_error_message">Please make sure you enter username and password</string>
+
+    <string name="action_logout">Log Out</string>
+    <string name="action_edit_friend">Edit Friend</string>
+    <string name="signup_error_message">Please make sure you enter username, password and email</string>
+    <string name="signup_error_title">Oops !!!</string>
+
+    <string name="alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="no_contacts">No Contacts Available</string>
+    <string name="chats_tab">CHATS</string>
+    <string name="friends_tab">FRIENDS</string>
+    <string name="empty_chat_label">No Chat Available Yet</string>
+    <string name="empty_friend_label">Add friends to begin !</string>
+    <string name="title_activity_edit_friend">Edit Friends</string>
+    <string name="error_title">We\'re sorry !!!</string>
+    <string name="action_home">Home</string>
+    <string name="action_camera">Take a picture</string>
+    <string-array name="camera_choices">
+        <item>Take Picture</item>
+        <item>Take Video</item>
+        <item>Choose Picture</item>
+        <item>Choose Video</item>
+    </string-array>
+    <string name="title_activity_chat">Chat Panel</string>
+    <string name="content_authority">com.example.android.chatapp</string>
+    <string name="server_error">Server Error! Null Cursor returned</string>
+    <string name="empty_cursor">Found no matches ...</string>
+    <string name="duplicate_username">Pick a different username</string>
+    <string name="current_user">LoggedUser</string>
+</resources>
