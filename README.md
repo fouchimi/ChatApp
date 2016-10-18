@@ -1,6 +1,3 @@
-# ChatApp
-Final Application for my NanoDegree course on Android
-
 <h1>Chat App</h1>
 
 This App allows users to create an account and help them send messages between one another.
