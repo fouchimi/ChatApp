@@ -46,4 +46,5 @@
     <string name="empty_cursor">Found no matches ...</string>
     <string name="duplicate_username">Pick a different username</string>
     <string name="current_user">LoggedUser</string>
+    <string name="error_external_storage">There was a problem accessing your device external storage</string>
 </resources>

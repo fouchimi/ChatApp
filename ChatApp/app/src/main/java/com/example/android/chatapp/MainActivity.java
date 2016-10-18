@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.view.Window;
-import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
     }
 
     private void navigateToLogin() {

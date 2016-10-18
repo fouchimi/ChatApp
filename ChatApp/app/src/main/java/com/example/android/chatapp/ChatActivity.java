@@ -1,14 +1,24 @@
 package com.example.android.chatapp;
 
+import android.Manifest;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,11 +32,14 @@ import android.widget.Toast;
 
 import com.example.android.chatapp.data.ChatContract;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -42,6 +55,100 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     protected MessageListAdapter mMessageListAdapter;
     private static final int CHAT_LOADER = 0;
     SharedPreferences sharedPref;
+    public static final int TAKE_PHOTO_REQUEST_CODE = 0;
+    public static final int TAKE_VIDEO_REQUEST_CODE = 1;
+    public static final int PICK_PHOTO_REQUEST_CODE = 2;
+    public static final int PICK_VIDEO_REQUEST_CODE = 3;
+
+    private static final int MEDIA_TYPE_IMAGE = 4;
+    private static final int MEDIA_TYPE_VIDEO = 5;
+
+    protected Uri mMediaUri;
+
+    protected DialogInterface.OnClickListener mDialogListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case 0: //Take picture
+                    Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                    if(mMediaUri == null) {
+                        //Display an error
+                        Toast.makeText(ChatActivity.this, getString(R.string.error_external_storage), Toast.LENGTH_LONG).show();
+                    }else{
+                        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            if(ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.CAMERA) ==
+                                    PackageManager.PERMISSION_GRANTED){
+                                startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST_CODE);
+                            }else {
+                                if(shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                                    Toast.makeText(ChatActivity.this, "This app required access to camera", Toast.LENGTH_SHORT).show();
+                                }
+                                requestPermissions(new String[]{Manifest.permission.CAMERA}, TAKE_PHOTO_REQUEST_CODE);
+                            }
+
+                        }else {
+                            startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST_CODE);
+                        }
+                    }
+                    break;
+                case 1: //Take video
+                    break;
+
+                case 2: //Choose picture
+                    break;
+
+                case 3: //Choose video
+                    break;
+
+            }
+        }
+    };
+
+    private Uri getOutputMediaFileUri(int mediaType) {
+        if(isExternalStorageAvailable()){
+            //1. Get External Storage Directory
+            File mediaStorageDir = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    getString(R.string.app_name));
+            //2. Create subdirectory
+            if(! mediaStorageDir.exists()){
+                if(!mediaStorageDir.mkdirs()){
+                    mediaStorageDir.mkdirs();
+                    Log.e(TAG, "Failed to create directory. ");
+                }
+            }
+
+            //3. Create a file name
+            File mediaFile;
+            Date now = new Date();
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(now);
+
+            String path = mediaStorageDir.getPath() + File.separator;
+            //path += mCurrentUser  + "_" + receiver + "_";
+            if(mediaType == MEDIA_TYPE_IMAGE) {
+                mediaFile = new File(path + "IMG_" + timestamp + ".jpg");
+            }else if(mediaType == MEDIA_TYPE_VIDEO) {
+                mediaFile = new File(path + "VID_" + timestamp + ".mp4");
+            }else {
+                return null;
+            }
+            Log.d(TAG, "File: " + Uri.fromFile(mediaFile));
+            return Uri.fromFile(mediaFile);
+        }else {
+            return null;
+        }
+    }
+
+    private boolean isExternalStorageAvailable(){
+        String state = Environment.getExternalStorageState();
+        if(state.equals(Environment.MEDIA_MOUNTED)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +157,13 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         sharedPref = getSharedPreferences(getString(R.string.current_user), Context.MODE_PRIVATE);
         mCurrentUser = sharedPref.getString(ParseConstants.KEY_USERNAME, "");
         receiver = sharedPref.getString(ParseConstants.KEY_FRIEND, "");
+
+        setTitle(receiver);
 
         messageListView = (ListView) findViewById(R.id.messageHistoryList);
         mEditText = (EditText) findViewById(R.id.message);
@@ -127,14 +238,34 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == TAKE_PHOTO_REQUEST_CODE){
+            if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(getApplicationContext(), "Application will not run without camera services",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
+            case android.R.id.home:
+                this.finish();
+                return true;
             case R.id.action_logout:
                 SharedPreferences.Editor edit = sharedPref.edit();
                 edit.remove(ParseConstants.KEY_USERNAME);
                 navigateToLogin();
                 return true;
+            /*case R.id.action_camera:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setItems(R.array.camera_choices, mDialogListener);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true; */
             default:
                 return super.onOptionsItemSelected(item);
         }
