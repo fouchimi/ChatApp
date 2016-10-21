@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
@@ -44,6 +46,19 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Tracker tracker = ((MyApplication) getApplication()).getTracker();
+
+        // Set screen name
+        tracker.setScreenName(getString(R.string.mainActivityScreenName));
+
+        //Send a screen view
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void navigateToLogin() {
@@ -84,6 +99,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 SharedPreferences.Editor edit = sharedPref.edit();
                 edit.remove(ParseConstants.KEY_USERNAME);
                 navigateToLogin();
+                return true;
+            case R.id.action_show_map:
+                Intent mapIntent = new Intent(this, MapActivity.class);
+                startActivity(mapIntent);
                 return true;
             case R.id.action_edit_friend:
                 Intent intent = new Intent(this, EditFriendActivity.class);

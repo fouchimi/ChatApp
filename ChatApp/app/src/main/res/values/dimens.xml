@@ -9,4 +9,9 @@
     <dimen name="image_height">48dp</dimen>
     <dimen name="widget_default_width">40dp</dimen>
     <dimen name="widget_default_height">40dp</dimen>
+
+    <dimen name="cardview_height">50dp</dimen>
+    <dimen name="cardview_margin">10dp</dimen>
+    <dimen name="cardview_radius">3dp</dimen>
+    <dimen name="cardview_padding_right">5dp</dimen>
 </resources>

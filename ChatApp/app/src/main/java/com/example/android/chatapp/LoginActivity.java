@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.chatapp.data.ChatContract;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -85,6 +87,17 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Tracker tracker = ((MyApplication) getApplication()).getTracker();
+        // Set screen name
+        tracker.setScreenName(getString(R.string.logInActivityScreenName));
+
+        //Send a screen view
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void showAlertDialog(String message) {

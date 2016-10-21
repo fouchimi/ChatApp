@@ -20,6 +20,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.android.chatapp.data.ChatContract;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -99,6 +101,17 @@ public class EditFriendActivity extends AppCompatActivity implements LoaderManag
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Tracker tracker = ((MyApplication) getApplication()).getTracker();
+        // Set screen name
+        tracker.setScreenName(getString(R.string.editFriendActivityScreenName));
+
+        //Send a screen view
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

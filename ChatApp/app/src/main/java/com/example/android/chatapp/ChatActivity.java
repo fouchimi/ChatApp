@@ -83,7 +83,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                                 startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST_CODE);
                             }else {
                                 if(shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                                    Toast.makeText(ChatActivity.this, "This app required access to camera", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ChatActivity.this, getString(R.string.camera_warning_message), Toast.LENGTH_SHORT).show();
                                 }
                                 requestPermissions(new String[]{Manifest.permission.CAMERA}, TAKE_PHOTO_REQUEST_CODE);
                             }
@@ -116,14 +116,14 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
             if(! mediaStorageDir.exists()){
                 if(!mediaStorageDir.mkdirs()){
                     mediaStorageDir.mkdirs();
-                    Log.e(TAG, "Failed to create directory. ");
+                    //Log.e(TAG, "Failed to create directory. ");
                 }
             }
 
             //3. Create a file name
             File mediaFile;
             Date now = new Date();
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(now);
+            String timestamp = new SimpleDateFormat(getString(R.string.date_format), Locale.US).format(now);
 
             String path = mediaStorageDir.getPath() + File.separator;
             //path += mCurrentUser  + "_" + receiver + "_";
@@ -193,7 +193,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                         chatValues.put(ChatContract.ChatsEntry.COLUMN_FROM, mCurrentUser);
                         chatValues.put(ChatContract.ChatsEntry.COLUMN_TO, receiver);
                         chatValues.put(ChatContract.ChatsEntry.COLUMN_CHAT_MESSAGE, chat);
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        DateFormat dateFormat = new SimpleDateFormat(getString(R.string.simple_date_format));
                         Date date = new Date();
                         chatValues.put(ChatContract.ChatsEntry.COLUMN_DATE, dateFormat.format(date));
                         chatValues.put(ChatContract.ChatsEntry.COLUMN_LATEST, "1");
@@ -242,7 +242,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == TAKE_PHOTO_REQUEST_CODE){
             if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(getApplicationContext(), "Application will not run without camera services",
+                Toast.makeText(getApplicationContext(), getString(R.string.photo_warning),
                         Toast.LENGTH_SHORT).show();
             }
         }

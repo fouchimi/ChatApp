@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.chatapp.MapActivity">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <!--<android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/cardview_margin"
+            android:layout_height="@dimen/cardview_height"
+            android:layout_marginLeft="@dimen/cardview_margin"
+            android:layout_marginRight="@dimen/cardview_margin"
+            card_view:cardCornerRadius="@dimen/cardview_radius">
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment" />
+        </android.support.v7.widget.CardView> -->
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/radio_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/cardview_height"
+            android:layout_marginLeft="@dimen/cardview_margin"
+            android:layout_marginRight="@dimen/cardview_margin"
+            android:layout_marginBottom="@dimen/cardview_margin"
+            android:paddingRight="@dimen/cardview_padding_right"
+            card_view:cardCornerRadius="@dimen/cardview_radius"
+            android:layout_gravity="bottom">
+
+            <RadioGroup
+                android:id="@+id/rg_modes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:paddingRight="10dp"
+                android:gravity="bottom">
+
+                <RadioButton android:id="@+id/rb_driving"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_driving"
+                    android:checked="true" />
+
+                <RadioButton android:id="@+id/rb_bicycling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_bicycling" />
+
+                <RadioButton android:id="@+id/rb_walking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_walking" />
+
+            </RadioGroup>
+
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
+</RelativeLayout>

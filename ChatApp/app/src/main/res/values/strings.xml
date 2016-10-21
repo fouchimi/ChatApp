@@ -47,4 +47,26 @@
     <string name="duplicate_username">Pick a different username</string>
     <string name="current_user">LoggedUser</string>
     <string name="error_external_storage">There was a problem accessing your device external storage</string>
+    <string name="show_map_action">Search Places</string>
+    <string name="travel_info">Travel Information</string>
+    <string name="ok">OK</string>
+
+    <string name="action_search">Search</string>
+    <string name="search_hint">Search nearby places</string>
+    <string name="ok_button">Ok</string>
+    <string name="str_bicycling">Bicycling</string>
+    <string name="str_driving">Driving</string>
+    <string name="str_walking">Walking</string>
+    <string name="app_label">Map</string>
+    <string name="search_title">Search Places</string>
+    <string name="mainActivityScreenName">Home Screen</string>
+    <string name="signUpActivityScreenName">Sign Up Screen</string>
+    <string name="logInActivityScreenName">Login Screen</string>
+    <string name="editFriendActivityScreenName">Edit Friend Screen</string>
+    <string name="mapActivityScreenName">Map Screen</string>
+    <string name="you_are_here">"Your\'re here"</string>
+    <string name="date_format">yyyyMMdd_HHmmss</string>
+    <string name="photo_warning">Application will not run without camera services</string>
+    <string name="simple_date_format">yyyy-MM-dd HH:mm:ss</string>
+    <string name="camera_warning_message">This app required access to camera</string>
 </resources>

@@ -11,4 +11,5 @@ public final class ParseConstants {
     public static final String KEY_FRIEND = "friend";
     public static final String KEY_CHAT_TABLE = "Chats";
     public static final String KEY_DATE_COLUMN = "date";
+    public static final String API_KEY = "AIzaSyDIVlLC5joZjsQIYtNMiJao9TqPxot91UI";
 }

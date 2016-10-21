@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.android.chatapp.data.ChatContract;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -82,6 +84,17 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Tracker tracker = ((MyApplication) getApplication()).getTracker();
+        // Set screen name
+        tracker.setScreenName(getString(R.string.signUpActivityScreenName));
+
+        //Send a screen view
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void showAlertDialog(String message) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string name="ga_trackingId">UA-86142091-1</string>
+    <bool name="ga_autoActivityTracking">false</bool>
+    <screenName name="com.example.android.chatapp.LoginActivity">
+        Login Screen
+    </screenName>
+    <screenName name="com.example.android.chatapp.SignUpActivity">
+        Sign Up Screen
+    </screenName>
+    <screenName name="com.example.android.chatapp.MainActivity">
+        Home Screen
+    </screenName>
+    <screenName name="com.example.android.chatapp.EditFriendActivity">
+        Edit Friends
+    </screenName>
+    <screenName name="com.example.android.chatapp.ChatActivity">
+        Chat Screen
+    </screenName>
+</resources>
